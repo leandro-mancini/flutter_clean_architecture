@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'Aprove-me',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
-        CustomLocalizationDelegate()
-      ],
+        CustomLocalizationDelegate(),
+      ],  
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: LoginPage(),
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),

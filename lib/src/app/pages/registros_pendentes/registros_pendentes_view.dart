@@ -87,7 +87,7 @@ class CustomLocalizationDelegate extends LocalizationsDelegate<MaterialLocalizat
   const CustomLocalizationDelegate();
 
   @override
-  bool isSupported(Locale locale) => locale.languageCode == 'pt';
+  bool isSupported(Locale locale) => locale.languageCode == 'en';
 
   @override
   Future<MaterialLocalizations> load(Locale locale) => SynchronousFuture<MaterialLocalizations>(const CustomLocalization());
@@ -96,7 +96,7 @@ class CustomLocalizationDelegate extends LocalizationsDelegate<MaterialLocalizat
   bool shouldReload(CustomLocalizationDelegate old) => false;
 
   @override
-  String toString() => 'CustomLocalization.delegate(pt_BR)';
+  String toString() => 'CustomLocalization.delegate(en_US)';
 }
 
 class CustomLocalization extends DefaultMaterialLocalizations {
