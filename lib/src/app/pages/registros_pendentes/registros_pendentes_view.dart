@@ -51,7 +51,7 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
       var d = drawerItems[i];
       drawerOptions.add(
         new ListTile(
-          leading: new Icon(d.icon),
+          leading: new Icon(d.icon, color: Color(0xFFFF6759)),
           title: new Text(d.title),
           selected: i == _selectedDrawerIndex,
           onTap: () => _onSelectItem(i),
