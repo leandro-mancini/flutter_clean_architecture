@@ -44,7 +44,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFF6200EE),
+                          color: Color(0xFFFF6759),
                           width: 2,
                         )
                       ),
@@ -76,7 +76,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFF6200EE),
+                          color: Color(0xFFFF6759),
                           width: 2,
                         )
                       ),
@@ -108,27 +108,71 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                   height: 40,
                 ),
                 Container(
-                  height: 40,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                    left: 30,
-                    right: 30,
-                  ),
-                  child: RaisedButton(
-                    color: Color(0xFF6200EE),
-                    padding: EdgeInsets.only(
-                      left: 30,
-                      right: 30,
-                    ),
-                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40)),
-                    child: Text(
-                      'ENTRAR',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: 20
+                        ),
+                        child: FlatButton(
+                          child: Text(
+                            'Esqueceu a senha?',
+                            style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () => {},
+                        ),
                       ),
-                    ),
-                    onPressed: () => Navigator.pushNamed(context, '/RegistrosPendentes'),
+                      Container(
+                        margin: EdgeInsets.only(
+                          right: 30,
+                        ),
+                        height: 40,
+                        child: RaisedButton(
+                          color: Color(0xFFFF6759),
+                          padding: EdgeInsets.only(
+                            left: 30,
+                            right: 30,
+                          ),
+                          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40)),
+                          child: Text(
+                            'ENTRAR',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () => Navigator.pushNamed(context, '/RegistrosPendentes'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: FlatButton(
+                          child: Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                              color: Color(0xFFFF6759),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () => {},
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

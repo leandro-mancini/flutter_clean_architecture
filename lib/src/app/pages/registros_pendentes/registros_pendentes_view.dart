@@ -1,3 +1,4 @@
+import 'package:aprove_me/src/app/pages/filtrar/filtrar_view.dart';
 import 'package:aprove_me/src/app/pages/registros_pendentes/registros_pendentes_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,11 +80,15 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
               );
             },
           ),
-          // action button
           IconButton(
             icon: Icon(Icons.filter_list),
             color: Color(0xFFFF1537),
-            onPressed: () {},
+            onPressed: () {
+               Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
+                builder: (BuildContext context) => FiltrarPage(),
+                fullscreenDialog: true,
+              ));
+            },
           ),
         ],
       ),
