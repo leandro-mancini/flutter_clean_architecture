@@ -3,6 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
+class DrawerItem {
+  String title;
+  IconData icon;
+  DrawerItem(this.title, this.icon);
+}
+
 class RegistrosPendentes extends View {
   @override
   _RegistrosPendentesState createState() => _RegistrosPendentesState(RegistrosPendentesController());
@@ -11,15 +17,56 @@ class RegistrosPendentes extends View {
 class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPendentesController> {
   _RegistrosPendentesState(RegistrosPendentesController controller) : super(controller);
 
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  
+  int _selectedDrawerIndex = 0;
+
+  final drawerItems = [
+    new DrawerItem('Registros pendentes', Icons.description),
+    new DrawerItem('Meus registros', Icons.history),
+    new DrawerItem('Sair', null)
+  ];
+
+  _onSelectItem(int index) {
+    setState(() => _selectedDrawerIndex = index);
+
+    switch(index) {
+      case 0:
+        print('Registros pendentes');
+        break;
+      case 1:
+        print('Meus registros');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var drawerOptions = <Widget>[];
+
+    for (var i = 0; i < drawerItems.length; i++) {
+      var d = drawerItems[i];
+      drawerOptions.add(
+        new ListTile(
+          leading: new Icon(d.icon),
+          title: new Text(d.title),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i),
+        )
+      );
+    }
+
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.menu),
           color: Color(0xFFFF1537),
-          onPressed: () => {},
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
         actions: <Widget>[
           IconButton(
@@ -39,6 +86,36 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
             onPressed: () {},
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                radius: 50,
+                backgroundColor: const Color(0xFFEAEAEC),
+                backgroundImage: NetworkImage("https://www.shareicon.net/data/256x256/2015/09/24/106425_man_512x512.png"),
+              ),
+              accountName: Text(
+                'Emmanuel Soares',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF585859),
+                ),
+              ),
+              accountEmail: null,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: Color(0xFFEAEAEC)),
+                )
+              ),
+            ),
+            Column(
+              children: drawerOptions
+            ),
+          ],
+        ),
       ),
     );
   }
