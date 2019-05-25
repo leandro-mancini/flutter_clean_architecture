@@ -1,4 +1,4 @@
-# aprove_me
+# Flutter clean architecture
 
 A new Flutter project.
 
