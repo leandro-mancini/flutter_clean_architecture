@@ -166,7 +166,7 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
                         children: <Widget>[
                           Container(
                             child: Text(
-                              'Expresso Duque de caxias',
+                              'Expresso Duque de caxias'.toUpperCase(),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -175,7 +175,7 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: 2, top: 2),
+                            margin: EdgeInsets.only(bottom: 4, top: 4),
                             child: Text(
                               'Pedido de compra',
                               style: TextStyle(
