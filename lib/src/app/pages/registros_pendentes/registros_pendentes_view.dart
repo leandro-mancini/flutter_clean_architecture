@@ -14,42 +14,79 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
   _RegistrosPendentesState(RegistrosPendentesController controller) : super(controller);
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var topAppBar = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          color: Color(0xFFFF1537),
-          onPressed: () => _scaffoldKey.currentState.openDrawer(),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Color(0xFFFF1537),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearchDelegate()
-              );
-            },
+      drawer: AppDrawer(),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            expandedHeight: 170,
+            floating: false,
+            pinned: true,
+            leading: IconButton(
+              icon: Icon(Icons.menu),
+              color: Color(0xFFFF1537),
+              onPressed: () => _scaffoldKey.currentState.openDrawer(),
+            ),
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                topAppBar = constraints.biggest.height;
+                return FlexibleSpaceBar(
+                  title: Text(
+                    'Registros Pendentes',
+                    style: TextStyle(
+                      color: Color(0xFF585859),
+                      fontSize: topAppBar <= 100 ? 20 : 24,
+                      fontWeight: FontWeight.normal
+                    ),
+                  ),
+                  titlePadding: EdgeInsets.only(
+                    bottom: topAppBar <= 100 ? 17 : 24,
+                    left: topAppBar <= 100 ? 70 : 17
+                  ),
+                );
+              },
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                color: Color(0xFFFF1537),
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate()
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.filter_list),
+                color: Color(0xFFFF1537),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
+                    builder: (BuildContext context) => FiltrarPage(),
+                    fullscreenDialog: true,
+                  ));
+                },
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            color: Color(0xFFFF1537),
-            onPressed: () {
-               Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
-                builder: (BuildContext context) => FiltrarPage(),
-                fullscreenDialog: true,
-              ));
-            },
-          ),
+          SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Conteúdo aqui.'),
+                ],
+              ),
+            ),
+          )
         ],
       ),
-      drawer: AppDrawer(),
     );
   }
 }
