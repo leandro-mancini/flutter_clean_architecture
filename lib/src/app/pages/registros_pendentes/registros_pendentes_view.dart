@@ -58,7 +58,7 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
                     'Registros Pendentes',
                     style: TextStyle(
                       color: Color(0xFF585859),
-                      fontSize: topAppBar <= 100 ? 20 : 24,
+                      fontSize: topAppBar <= 120 ? 18 : 20,
                       fontWeight: FontWeight.normal
                     ),
                   ),
@@ -107,38 +107,65 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
                       items.removeAt(index);
                     });
                   },
-                  background: Container(
+                  background: new Container (
                     color: Color(0xFFFF6759),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: new EdgeInsets.all(15),
+                    child: new Row(
                       children: <Widget>[
-                        Icon(
-                          Icons.thumb_down, 
-                          color: Colors.white, 
-                          size: 24
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.thumb_down, 
+                              color: Colors.white, 
+                              size: 24
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              'Reprovar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600
+                              ),
+                            ),
+                          ],
                         ),
-                        Text('Reprovar'),
                       ],
                     ),
                   ),
                   secondaryBackground: Container(
-                    padding: EdgeInsets.all(20),
                     color: Color(0xFF22E6A1),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Icon(
-                          Icons.thumb_up, 
-                          color: Colors.white, 
-                          size: 24
-                        ),
-                        Text(
-                          'Aprovar',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Icon(
+                                Icons.thumb_up, 
+                                color: Colors.white, 
+                                size: 24
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                              Text(
+                                'Aprovar',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   child: GestureDetector(
