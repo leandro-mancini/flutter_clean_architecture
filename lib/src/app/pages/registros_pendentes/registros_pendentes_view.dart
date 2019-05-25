@@ -16,6 +16,15 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   var topAppBar = 0.0;
 
+  List items = getDummyList();
+
+  static List getDummyList(){
+   List list =  List.generate(10, (i) {
+    return "Item ${i +1 }";
+    });
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,15 +85,79 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
             ],
           ),
           SliverFillRemaining(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Conteúdo aqui.'),
-                ],
+            child: Container(
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: Key(items[index]),
+                    onDismissed: (direction) {
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
+                    background: Container(
+                      color: Color(0xFF22E6A1)
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color(0xFFEAEAEC),
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      padding: EdgeInsets.only(
+                        bottom: 16,
+                        top: 16,
+                      ),
+                      margin: EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              'Expresso Duque de caxias',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF292E33),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 2, top: 2),
+                            child: Text(
+                              'Pedido de compra',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF585859)
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              'nº 0000012 . 16.500,00',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF585859)
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
