@@ -169,7 +169,7 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () => print('CLICOU'),
+                    onTap: () => Navigator.pushNamed(context, '/DetalhesRegistro'),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
