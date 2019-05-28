@@ -19,18 +19,37 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
   List items = getDummyList();
 
   static List getDummyList(){
-   List list =  List.generate(10, (i) {
-    return "Item ${i +1 }";
+    List list =  List.generate(10, (i) {
+      return "Item ${i +1 }";
     });
+    
     return list;
   }
 
-  void _handleArchive() {
+  void _handleArchive(item) {
     print('ARQUIVO');
+    print(item);
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text('Aprovado'),
+      action: SnackBarAction(
+        label: 'DESFAZER',
+        onPressed: () { },
+      ),
+    ));
   }
 
-  void _handleDelete() {
+  void _handleDelete(item) {
     print('REMOVER');
+    print(item);
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text('Reprovado'),
+      action: SnackBarAction(
+        label: 'DESFAZER',
+        onPressed: () { },
+      ),
+    ));
   }
 
   @override
@@ -40,198 +59,214 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
       drawer: AppDrawer(),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: Colors.white,
-            expandedHeight: 170,
-            floating: false,
-            pinned: true,
-            leading: IconButton(
-              icon: Icon(Icons.menu),
-              color: Color(0xFFFF1537),
-              onPressed: () => _scaffoldKey.currentState.openDrawer(),
-            ),
-            flexibleSpace: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                topAppBar = constraints.biggest.height;
-                return FlexibleSpaceBar(
-                  title: Text(
-                    'Registros Pendentes',
-                    style: TextStyle(
-                      color: Color(0xFF585859),
-                      fontSize: topAppBar <= 120 ? 18 : 20,
-                      fontWeight: FontWeight.normal
-                    ),
-                  ),
-                  titlePadding: EdgeInsets.only(
-                    bottom: topAppBar <= 120 ? 17 : 24,
-                    left: topAppBar <= 120 ? 70 : 17
-                  ),
-                );
-              },
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                color: Color(0xFFFF1537),
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate()
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.filter_list),
-                color: Color(0xFFFF1537),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
-                    builder: (BuildContext context) => FiltrarPage(),
-                    fullscreenDialog: true,
-                  ));
-                },
-              ),
-            ],
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              List<Widget>.generate(items.length, (index) {
-                return Dismissible(
-                  key: Key(items[index]),
-                  onDismissed: (DismissDirection direction) {
-                    if (direction == DismissDirection.endToStart)
-                      _handleArchive();
-                    else
-                      _handleDelete();
-
-                    setState(() {
-                      items.removeAt(index);
-                    });
-                  },
-                  background: new Container (
-                    color: Color(0xFFFF6759),
-                    padding: new EdgeInsets.all(15),
-                    child: new Row(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.thumb_down, 
-                              color: Colors.white, 
-                              size: 24
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              'Reprovar',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  secondaryBackground: Container(
-                    color: Color(0xFF22E6A1),
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Icon(
-                                Icons.thumb_up, 
-                                color: Colors.white, 
-                                size: 24
-                              ),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              Text(
-                                'Aprovar',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  child: GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/DetalhesRegistro'),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Color(0xFFEAEAEC),
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                      padding: EdgeInsets.only(
-                        bottom: 16,
-                        top: 16,
-                      ),
-                      margin: EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            child: Text(
-                              'Expresso Duque de caxias'.toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF292E33),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 4, top: 4),
-                            child: Text(
-                              'Pedido de compra',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF585859)
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              'nº 0000012 . 16.500,00',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF585859)
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              })
-            ),
-          )
+          _appBar(),
+          _myList()
         ],
       ),
     );
   }
+
+  Widget _myEmpty() => Center(
+    child: Text('Nenhum resultado.'),
+  );
+
+  Widget _myList() => SliverList(
+    delegate: SliverChildListDelegate(
+      List<Widget>.generate(items.length, (index) {
+        print(items.isEmpty);
+
+        return Dismissible(
+          key: Key(items[index]),
+          onDismissed: (DismissDirection direction) {
+            if (direction == DismissDirection.endToStart)
+              _handleArchive(items[index]);
+            else
+              _handleDelete(items[index]);
+
+            setState(() {
+              items.removeAt(index);
+            });
+          },
+          background: new Container (
+            color: Color(0xFFFF6759),
+            padding: new EdgeInsets.all(15),
+            child: _reprovar(), 
+          ),
+          secondaryBackground: Container(
+            color: Color(0xFF22E6A1),
+            child: _aprovar(),
+          ),
+          child: GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/DetalhesRegistro'),
+            child: _contentList(),
+          ),
+        );
+      })
+    ),
+  );
+
+  Widget _contentList() => Container(
+    width: double.infinity,
+    decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Color(0xFFEAEAEC),
+          width: 1,
+        ),
+      ),
+    ),
+    padding: EdgeInsets.only(
+      bottom: 16,
+      top: 16,
+    ),
+    margin: EdgeInsets.only(
+      left: 16,
+      right: 16,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          child: Text(
+            'Expresso Duque de caxias'.toUpperCase(),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF292E33),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 4, top: 4),
+          child: Text(
+            'Pedido de compra',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF585859)
+            ),
+          ),
+        ),
+        Container(
+          child: Text(
+            'nº 0000012 . 16.500,00',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF585859)
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget _aprovar() => Padding(
+    padding: EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Icon(
+              Icons.thumb_up, 
+              color: Colors.white, 
+              size: 24
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              'Aprovar',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  Widget _reprovar() => Row(
+    children: <Widget>[
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.thumb_down, 
+            color: Colors.white, 
+            size: 24
+          ),
+          SizedBox(
+            height: 2,
+          ),
+          Text(
+            'Reprovar',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w600
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+
+  Widget _appBar() => SliverAppBar(
+    backgroundColor: Colors.white,
+    expandedHeight: 170,
+    floating: false,
+    pinned: true,
+    leading: IconButton(
+      icon: Icon(Icons.menu),
+      color: Color(0xFFFF1537),
+      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+    ),
+    flexibleSpace: LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        topAppBar = constraints.biggest.height;
+        return FlexibleSpaceBar(
+          title: Text(
+            'Registros Pendentes',
+            style: TextStyle(
+              color: Color(0xFF585859),
+              fontSize: topAppBar <= 120 ? 18 : 20,
+              fontWeight: FontWeight.normal
+            ),
+          ),
+          titlePadding: EdgeInsets.only(
+            bottom: topAppBar <= 120 ? 17 : 24,
+            left: topAppBar <= 120 ? 70 : 17
+          ),
+        );
+      },
+    ),
+    actions: <Widget>[
+      IconButton(
+        icon: Icon(Icons.search),
+        color: Color(0xFFFF1537),
+        onPressed: () {
+          showSearch(
+            context: context,
+            delegate: CustomSearchDelegate()
+          );
+        },
+      ),
+      IconButton(
+        icon: Icon(Icons.filter_list),
+        color: Color(0xFFFF1537),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
+            builder: (BuildContext context) => FiltrarPage(),
+            fullscreenDialog: true,
+          ));
+        },
+      ),
+    ],
+  );
 }
 
 class CustomSearchDelegate extends SearchDelegate {

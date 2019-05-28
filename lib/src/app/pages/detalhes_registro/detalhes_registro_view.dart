@@ -214,10 +214,7 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
               // width: MediaQuery.of(context).size.width * 1.4,
               child: _bodyData(),
             ),
-          )
-          // Container(
-          //   child: _bodyData(),
-          // ),
+          ),
         ],
       ),
     ),
