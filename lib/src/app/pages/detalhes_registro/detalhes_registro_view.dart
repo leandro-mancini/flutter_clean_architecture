@@ -1,3 +1,4 @@
+import 'package:aprove_me/src/domain/entities/produto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -14,6 +15,14 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   var topAppBar = 0.0;
+  bool ascending;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    ascending = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +83,7 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
         padding: EdgeInsets.only(
           left: 26,
           right: 26,
-          top: 6,
+          top: 4,
           bottom: 4,
         ),
         child: Text(
@@ -97,11 +106,10 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
         ),
       ) : new Container(),
       Text(
-        'Nº0000001',
+        'Nº0000002',
         style: TextStyle(
           color: Color(0xFF585859),
           fontWeight: FontWeight.normal,
-          fontSize: 24,
           fontFamily: 'Montserrat Regular'
         ),
       ),
@@ -110,6 +118,7 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
 
   Widget _produtos() => Container(
     child: Card(
+      elevation: 4,
       margin: EdgeInsets.all(16),
       child: Column(
         children: <Widget>[
@@ -199,7 +208,16 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
               ],
             ),
           ),
-          _bodyData(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              // width: MediaQuery.of(context).size.width * 1.4,
+              child: _bodyData(),
+            ),
+          )
+          // Container(
+          //   child: _bodyData(),
+          // ),
         ],
       ),
     ),
@@ -312,6 +330,7 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
   );
 
   Widget _bottomNavigationBar() => BottomAppBar(
+    elevation: 16,
     child: Container(
       height: 120,
       child: Row(
@@ -395,108 +414,66 @@ class _DetalhesRegistroState extends ViewState<DetalhesRegistro, DetalhesRegistr
   );
 
   Widget _bodyData() => DataTable(
+    sortAscending: ascending,
+    sortColumnIndex: 0,
     columns: <DataColumn>[
       DataColumn(
-        label: Text(
-          'Itens',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Montserrat Regular',
-          ),
-        ),
-        numeric: false,
-        onSort: (i,b){}
+        label: Text('Itens')
       ),
       DataColumn(
-        label: Text(
-          'unid.',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Montserrat Regular',
-          ),
-        ),
-        numeric: false,
-        onSort: (i,b){}
+        label: Text('Unid.'),
       ),
       DataColumn(
-        label: Text(
-          'R\$',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Montserrat Regular',
-          ),
-        ),
-        numeric: false,
-        onSort: (i,b){}
+        label: Text('R\$'),
       ),
     ],
-    rows: names.map((name) => DataRow(
+    rows: produtos.map((Produto produto) => DataRow(
       cells: [
-        DataCell(
-          Text(
-            name.firstName,
-            style: TextStyle(
-              fontSize: 10,
-              fontFamily: 'Montserrat Regular',
-            ),
-          )
-        ),
-        DataCell(
-          Text(
-            name.lastName,
-            style: TextStyle(
-              fontSize: 10,
-              fontFamily: 'Montserrat Regular',
-            ),
-          )
-        ),
-        DataCell(
-          Text(
-            name.valor,
-            style: TextStyle(
-              fontSize: 10,
-              fontFamily: 'Montserrat Regular',
-            ),
-          )
-        ),
+        DataCell(Text('${produto.item}')),
+        DataCell(Text('${produto.unidade}')),
+        DataCell(Text('${produto.valor}')),
       ]
     )).toList(),
   );
+
+  void onSortColumn({int columnIndex, bool ascending}) {
+    if (columnIndex == 0) {
+      setState(() {
+        if (ascending) {
+          produtos.sort((a, b) => a.item.compareTo(b.item));
+        } else {
+          produtos.sort((a, b) => b.item.compareTo(a.item));
+        }
+        this.ascending = ascending;
+      });
+    }
+  }
+
+  void onSelectedRowChanged({bool selected, Produto produto}) {
+    print(selected);
+    print(produto);
+  }
 }
 
-class Name {
-	String firstName;
-	String lastName;
-  String valor;
-	
-	Name({this.firstName, this.lastName, this.valor});
-}
-
-var names = <Name>[
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
-	Name(firstName: 'Lâmpada Fluorescente', lastName: '100.000', valor: 'R\$250,0'),
+var produtos = <Produto>[
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+  Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+  Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+  Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
+	Produto(item: 'Lâmpada Fluorescente', unidade: '100.000', valor: 250),
 ];
