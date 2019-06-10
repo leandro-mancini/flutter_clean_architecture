@@ -10,6 +10,8 @@ class LoginPage extends View {
 class _LoginPageState extends ViewState<LoginPage, LoginController> {
   _LoginPageState(LoginController controller) : super(controller);
 
+  bool _passwordVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +74,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                   ),
                   child: TextFormField(
                     keyboardType: TextInputType.text,
-                    obscureText: true,
+                    obscureText: _passwordVisible,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -84,12 +86,14 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                       labelText: 'Senha',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.visibility,
+                          _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                           color: Colors.black38,
                         ),
                         onPressed: () {
                           setState(() {
-                            // _passwordVisible = !_passwordVisible;  
+                            _passwordVisible = !_passwordVisible;  
                           });
                         },
                       ),
@@ -145,7 +149,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                               fontSize: 14,
                             ),
                           ),
-                          onPressed: () => Navigator.pushNamed(context, '/RegistrosPendentes'),
+                          onPressed: () => Navigator.pushNamed(context, '/Home'),
                         ),
                       ),
                     ],
