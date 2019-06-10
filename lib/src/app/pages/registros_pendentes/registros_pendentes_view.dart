@@ -66,10 +66,6 @@ class _RegistrosPendentesState extends ViewState<RegistrosPendentes, RegistrosPe
     );
   }
 
-  Widget _myEmpty() => Center(
-    child: Text('Nenhum resultado.'),
-  );
-
   Widget _myList() => SliverList(
     delegate: SliverChildListDelegate(
       List<Widget>.generate(items.length, (index) {

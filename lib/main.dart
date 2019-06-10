@@ -1,4 +1,3 @@
-import 'package:aprove_me/src/app/pages/detalhes_registro/detalhes_registro_view.dart';
 import 'package:aprove_me/src/app/pages/home/home_view.dart';
 import 'package:aprove_me/src/app/pages/login/login_view.dart';
 import 'package:aprove_me/src/app/pages/registros_pendentes/registros_pendentes_view.dart';

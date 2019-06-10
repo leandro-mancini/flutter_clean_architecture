@@ -38,9 +38,7 @@ class _FiltrarPageState extends ViewState<FiltrarPage, FiltrarController> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Color(0xFFFF1537),
-          onPressed: () => {
-            Navigator.pop(context, DismissDialogAction.cancel)
-          },
+          onPressed: () => Navigator.pop(context, DismissDialogAction.cancel),
         ),
         actions: <Widget> [
           FlatButton(
